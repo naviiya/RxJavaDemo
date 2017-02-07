@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         mListView.setVisibility(View.GONE);
         mLoadingView.setVisibility(View.GONE);
         mQueryButton.setVisibility(View.VISIBLE);
+        mAppInfos.clear();
     }
 
     private void query() {
@@ -165,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
                 v = LayoutInflater.from(parent.getContext()).
                         inflate(R.layout.list_item,parent,false);
                 holder = new ViewHolder();
+                holder.appName = (TextView) v.findViewById(R.id.tv_app_name);
+                holder.icon = (ImageView) v.findViewById(R.id.iv_app_icon);
                 v.setTag(holder);
             }else {
                 v = convertView;
