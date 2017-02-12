@@ -1,14 +1,16 @@
 apply plugin: 'com.android.application'
 
+def app = rootProject.ext.android
+def dep = rootProject.ext.dependencies
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion app.compileSdkVersion
+    buildToolsVersion app.buildToolsVersion
     defaultConfig {
         applicationId "com.tstaurus.kuai"
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion app.minSdkVersion
+        targetSdkVersion app.targetSdkVersion
+        versionCode app.versionCode
+        versionName app.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -30,10 +32,22 @@ dependencies {
 //    // Because RxAndroid releases are few and far between, it is recommended you also
 //    // explicitly depend on RxJava's latest version for bug fixes and new features.
 //    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
-    compile 'io.reactivex:rxandroid:1.2.1'
-// Because RxAndroid releases are few and far between, it is recommended you also
-// explicitly depend on RxJava's latest version for bug fixes and new features.
-    compile 'io.reactivex:rxjava:1.1.6'
-    compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+//    compile 'io.reactivex:rxandroid:1.2.1'
+//// Because RxAndroid releases are few and far between, it is recommended you also
+//// explicitly depend on RxJava's latest version for bug fixes and new features.
+//    compile 'io.reactivex:rxjava:1.1.6'
+//    compile 'com.jakewharton:butterknife:8.5.1'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    compile dep.supportv7
+    compile dep.supportv4
+    compile dep.design
+    compile dep.rxandroid
+    compile dep.rxjava
+    compile dep.retrofit
+    compile dep.retrofitgson
+    compile dep.retrofitrxjava
+    compile dep.butterknife
+    compile dep.butterknifejaker
+
 }

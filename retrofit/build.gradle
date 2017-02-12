@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+def app = rootProject.ext.android
+def dep = rootProject.ext.dependencies
+android {
+    compileSdkVersion app.compileSdkVersion
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        applicationId "com.kuai.app.retrofit"
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+//    compile 'com.android.support:appcompat-v7:25.1.0'
+    testCompile 'junit:junit:4.12'
+    compile dep.supportv7
+    compile dep.supportv4
+    compile dep.design
+    compile dep.rxandroid
+    compile dep.rxjava
+    compile dep.retrofit
+    compile dep.retrofitgson
+    compile dep.retrofitrxjava
+    compile dep.butterknife
+    compile dep.butterknifejaker
+    compile dep.multidex
+}
