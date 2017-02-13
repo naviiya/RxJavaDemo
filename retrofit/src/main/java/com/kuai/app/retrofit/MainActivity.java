@@ -4,63 +4,51 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.kuai.app.retrofit.api.JokeApiService;
 import com.kuai.app.retrofit.bean.JokeResult;
-import com.kuai.app.retrofit.manager.ApiManager;
+import com.kuai.app.retrofit.presenter.JokePresenter;
+import com.kuai.app.retrofit.presenter.impl.JokePresenterImpl;
+import com.kuai.app.retrofit.view.IJokeView;
 
-import java.util.List;
-
-import retrofit2.adapter.rxjava.Result;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IJokeView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private JokePresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mPresenter = new JokePresenterImpl(this);
         query();
     }
 
     private void query() {
-      ApiManager.getInstance().
-                jokeApi().getTxtJokeList(JokeApiService.KEY, 0, 10)
-                .subscribeOn(Schedulers.io())
-//                .flatMap(new Func1<Result<JokeResult>, Observable<?>>() {
-//                    @Override
-//                    public Observable<?> call(Result<JokeResult> jokeResultResult) {
-////                        boolean error = jokeResultResult.isError();
-////                        if(!error){
-//                            JokeResult body = jokeResultResult.response().body();
-//
-////                        }
-//                        return null;
-//                    }
-//                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Result<JokeResult>>() {
-                    @Override
-                    public void onCompleted() {
+        if(mPresenter != null) {
+            mPresenter.getJokeList();
+        }
+    }
 
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "onError: ", e);
-                    }
+    @Override
+    public void onError(Exception e) {
+        Log.e(TAG, "onError: ", e);
+    }
 
-                    @Override
-                    public void onNext(Result<JokeResult> jokeResultResult) {
-                        Log.i(TAG, "onNext: " + jokeResultResult.error());
-                        List<JokeResult.ResultBean.Joke> jokes = jokeResultResult.response().body().getResult().getData();
-                        for (int i = 0; i < jokes.size(); i++) {
-                            Log.i(TAG, "onNext: " + jokes.get(i));
-                        }
-                    }
-                });
+    @Override
+    public void onSuccess(JokeResult result) {
+        Log.i(TAG, "onSuccess: " + result.getResult().getData());
+    }
+
+    @Override
+    public void onPrepare() {
+        Log.i(TAG, "onPrepare: ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(mPresenter != null){
+            mPresenter.onViewDestroyed();
+        }
+        super.onDestroy();
     }
 }

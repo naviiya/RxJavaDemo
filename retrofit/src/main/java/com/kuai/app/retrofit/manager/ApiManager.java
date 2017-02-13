@@ -21,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 服务器请求管理类
  */
 
+@Deprecated
 public class ApiManager {
 
     private JokeApiService mJokeApiService;
