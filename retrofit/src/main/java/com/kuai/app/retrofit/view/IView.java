@@ -5,4 +5,10 @@ package com.kuai.app.retrofit.view;
  */
 
 public interface IView {
+
+    void onPrepare();
+
+    void dismiss();
+
+    void error(Exception e);
 }

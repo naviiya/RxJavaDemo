@@ -1,11 +1,14 @@
 package com.kuai.app.retrofit.presenter;
 
+import rx.Subscriber;
+
 /**
  *  presenter基类
  */
 
 public interface IPresenter<IView> {
 
-    void onViewDestroyed();
+    void onViewAttached(Subscriber subscriber);
 
+    void onViewDestroyed();
 }
