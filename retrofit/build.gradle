@@ -42,4 +42,5 @@ dependencies {
     compile dep.butterknife
     compile dep.butterknifejaker
     compile dep.multidex
+    compile dep.glide
 }

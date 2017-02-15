@@ -1,5 +1,6 @@
 package com.kuai.app.retrofit;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.kuai.app.retrofit.bean.JokeResult;
 
 import java.util.ArrayList;
@@ -20,7 +22,10 @@ public class JokeAdapter extends RecyclerView.Adapter{
 
     private List<JokeResult.ResultBean.Joke> mJokes;
 
-    public JokeAdapter(){
+    private Context mContext;
+
+    public JokeAdapter(Context context){
+        mContext = context;
         mJokes = new ArrayList<>();
     }
 
@@ -53,6 +58,11 @@ public class JokeAdapter extends RecyclerView.Adapter{
             case TYPE_IMG:
                 ImgHolder imgHolder = (ImgHolder) holder;
                 imgHolder.content.setText(mJokes.get(position).getContent());
+                Glide.with(mContext).load(mJokes.get(position).getUrl())
+                        .centerCrop()
+                        .crossFade()
+                        .placeholder(R.mipmap.ic_launcher)
+                        .into(imgHolder.img);
                 break;
             case TYPE_TXT:
                 TxtHolder txtHolder = (TxtHolder) holder;

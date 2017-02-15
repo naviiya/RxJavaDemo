@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements IJokeView {
         mJokeRecyclerView.setLayoutManager(manager);
         mJokeRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         List<JokeResult.ResultBean.Joke> jokes = new ArrayList<>();
-        mAdapter = new JokeAdapter();
+        mAdapter = new JokeAdapter(this);
         mJokeRecyclerView.setAdapter(mAdapter);
     }
 
