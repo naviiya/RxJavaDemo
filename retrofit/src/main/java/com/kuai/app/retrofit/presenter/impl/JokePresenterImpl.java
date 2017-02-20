@@ -50,7 +50,7 @@ public class JokePresenterImpl implements JokePresenter<IJokeView>{
                 mJokeView.getJokeList(jokes);
             }
         };
-        mJokeModel.getJokeList(subscriber,0,100);
+        mJokeModel.getJokeList(subscriber,1,2);
         onViewAttached(subscriber);
     }
 

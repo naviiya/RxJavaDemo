@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * 服务器请求管理类
+ * {use @link ServiceFactory as instead}
  */
 
 @Deprecated

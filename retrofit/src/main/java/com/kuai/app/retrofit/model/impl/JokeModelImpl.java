@@ -29,8 +29,8 @@ public class JokeModelImpl implements JokeModel<List<JokeResult.ResultBean.Joke>
         try {
             JokeApiService service = ServiceFactory.getInstance().createService(JokeApiService.class);
             // 随机拼接文字和图片笑话
-            Observable.zip(service.getImgJokeList(page, pageSize).flatMap(new JokeFunc1()),
-                            service.getTxtJokeList(page, pageSize).flatMap(new JokeFunc1()),
+            Observable.zip(service.getImgJokeList(page).flatMap(new JokeFunc1()),
+                            service.getTxtJokeList(page).flatMap(new JokeFunc1()),
                     // 拼接逻辑
                             new JokeFunc2())
             .compose(RxTransformManager.<List<JokeResult.ResultBean.Joke>>normalTransform())

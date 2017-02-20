@@ -1,1 +1,1 @@
-include ':rxjava', ':retrofit'
+include ':rxjava', ':retrofit', ':mvp-core'

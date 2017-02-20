@@ -1,7 +1,6 @@
-package com.kuai.app.retrofit;
+package com.kuai.app.retrofit.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,20 +9,21 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.kuai.app.retrofit.BaseActivity;
+import com.kuai.app.retrofit.R;
 import com.kuai.app.retrofit.bean.JokeResult;
 import com.kuai.app.retrofit.presenter.JokePresenter;
 import com.kuai.app.retrofit.presenter.impl.JokePresenterImpl;
 import com.kuai.app.retrofit.view.IJokeView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements IJokeView {
+public class JokeActivity extends BaseActivity implements IJokeView {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = JokeActivity.class.getSimpleName();
     @BindView(R.id.rv_list)
     RecyclerView mJokeRecyclerView;
     @BindView(R.id.pb_loading)
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements IJokeView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.joke_activity_layout);
         ButterKnife.bind(this);
         initView();
         mPresenter = new JokePresenterImpl(this);
@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements IJokeView {
         LinearLayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         mJokeRecyclerView.setLayoutManager(manager);
         mJokeRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-        List<JokeResult.ResultBean.Joke> jokes = new ArrayList<>();
         mAdapter = new JokeAdapter(this);
         mJokeRecyclerView.setAdapter(mAdapter);
     }
@@ -85,13 +84,14 @@ public class MainActivity extends AppCompatActivity implements IJokeView {
 
     @Override
     public void getJokeList(List<JokeResult.ResultBean.Joke> jokes) {
-//        Log.i(TAG, "getJokeList: " + jokes);
+        int imgCount = 0;
+        int txtCount = 0;
         for (int i = 0; i < jokes.size(); i++) {
             JokeResult.ResultBean.Joke joke = jokes.get(i);
             if (joke.getUrl() != null) {
-                Log.i(TAG, "getJokeList img:" + joke);
+                Log.i(TAG, "第" + ++imgCount + "条img数据: " + joke);
             } else {
-                Log.i(TAG, "getJokeList: txt" + joke);
+                Log.i(TAG, "第" + ++txtCount + "条txt数据: " + joke);
             }
         }
         mAdapter.refresh(jokes);

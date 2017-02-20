@@ -15,6 +15,8 @@ import rx.functions.Func1;
 
 public class JokeFunc1 implements Func1<Result<JokeResult>, Observable<List<JokeResult.ResultBean.Joke>>> {
 
+
+    private final static String TAG = JokeFunc1.class.getSimpleName();
     @Override
     public Observable<List<JokeResult.ResultBean.Joke>> call(Result<JokeResult> jokeResultResult) {
         if(jokeResultResult.isError() || jokeResultResult.response().body() == null){

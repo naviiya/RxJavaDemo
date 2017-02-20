@@ -18,6 +18,12 @@ android {
     }
     buildTypes {
         release {
+            buildConfigField('boolean','isDebug','false')
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField('boolean','isDebug','true')
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -43,4 +49,9 @@ dependencies {
     compile dep.butterknifejaker
     compile dep.multidex
     compile dep.glide
+    compile dep.leakdebug
+    releaseCompile dep.leakrelease
+    debugCompile dep.leakdebug
+    compile dep.cardview
+    compile project(":mvp-core")
 }

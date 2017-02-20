@@ -1,6 +1,8 @@
-package com.kuai.app.retrofit;
+package com.kuai.app.retrofit.ui;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,8 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.kuai.app.retrofit.R;
 import com.kuai.app.retrofit.bean.JokeResult;
+import com.kuai.app.retrofit.manager.MediaManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +61,14 @@ public class JokeAdapter extends RecyclerView.Adapter{
             case TYPE_IMG:
                 ImgHolder imgHolder = (ImgHolder) holder;
                 imgHolder.content.setText(mJokes.get(position).getContent());
-                Glide.with(mContext).load(mJokes.get(position).getUrl())
-                        .centerCrop()
-                        .crossFade()
-                        .placeholder(R.mipmap.ic_launcher)
-                        .into(imgHolder.img);
+                final String url = mJokes.get(position).getUrl();
+                MediaManager.loadThumbnailToImageView(url,R.mipmap.ic_launcher,imgHolder.img, (Activity) mContext);
+                imgHolder.img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDetailImg(url);
+                    }
+                });
                 break;
             case TYPE_TXT:
                 TxtHolder txtHolder = (TxtHolder) holder;
@@ -70,6 +76,12 @@ public class JokeAdapter extends RecyclerView.Adapter{
                 txtHolder.time.setText(mJokes.get(position).getUpdateTime());
                 break;
         }
+    }
+
+    private void showDetailImg(String url) {
+        Intent i = new Intent(mContext,ImageActivity.class);
+        i.putExtra("img_uri",url);
+        mContext.startActivity(i);
     }
 
     @Override
